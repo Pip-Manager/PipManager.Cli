@@ -12,6 +12,7 @@
         <SelfContained>true</SelfContained>
         <PublishSingleFile>true</PublishSingleFile>
         <CopyOutputSymbolsToPublishDirectory>false</CopyOutputSymbolsToPublishDirectory>
+        <SuppressTrimAnalysisWarnings>true</SuppressTrimAnalysisWarnings>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)'=='Release'">
@@ -20,10 +21,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\PipManager.Core\PipManager.Core.csproj" />
+        <ProjectReference Include="..\PipManager.Core\PipManager.Core.csproj" />
     </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="CliFx" Version="2.3.5" />
+        <PackageReference Include="ConsoleTables" Version="2.6.1" />
     </ItemGroup>
 </Project>
