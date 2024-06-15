@@ -10,7 +10,13 @@
         
         <PublishTrimmed>true</PublishTrimmed>
         <SelfContained>true</SelfContained>
+        <PublishSingleFile>true</PublishSingleFile>
         <CopyOutputSymbolsToPublishDirectory>false</CopyOutputSymbolsToPublishDirectory>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)'=='Release'">
+        <DebugSymbols>False</DebugSymbols>
+        <DebugType>None</DebugType>
     </PropertyGroup>
 
     <ItemGroup>
@@ -20,5 +26,4 @@
     <ItemGroup>
         <PackageReference Include="CliFx" Version="2.3.5" />
     </ItemGroup>
-
 </Project>

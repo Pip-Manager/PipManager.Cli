@@ -21,6 +21,7 @@ public static class Program
         return await new CliApplicationBuilder()
             .AddCommand<EnvironmentCommand>()
             .AddCommand<ExecutePipCommand>()
+            .SetExecutableName("PipManager.Cli")
             .Build()
             .RunAsync(args);
     }
