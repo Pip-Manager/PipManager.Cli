@@ -41,6 +41,10 @@ public class EnvironmentRemoveCommand : Command<EnvRemoveSettings>
             if (response.Type == ResponseMessageType.Success)
             {
                 Configuration.AppConfig!.Environments.Remove(response.Message!);
+                if(Configuration.AppConfig.SelectedEnvironment == response.Message)
+                {
+                    Configuration.AppConfig.SelectedEnvironment = null;
+                }
                 Configuration.Save();
                 AnsiConsole.MarkupLine("[green]Environment removed successfully[/]");
             }
@@ -55,6 +59,10 @@ public class EnvironmentRemoveCommand : Command<EnvRemoveSettings>
             if (response.Type == ResponseMessageType.Success)
             {
                 Configuration.AppConfig!.Environments.Remove(response.Message!);
+                if(Configuration.AppConfig.SelectedEnvironment == response.Message)
+                {
+                    Configuration.AppConfig.SelectedEnvironment = null;
+                }
                 Configuration.Save();
                 AnsiConsole.MarkupLine("[green]Environment removed successfully[/]");
             }

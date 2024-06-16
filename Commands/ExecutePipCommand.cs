@@ -13,10 +13,12 @@ public class ExecutePipCommand
         if(Configuration.AppConfig!.Environments.Count == 0)
         {
             AnsiConsole.MarkupLine("[red]Python environment has not been added yet, add it with the 'env add' command.[/]");
+            return;
         }
         if(Configuration.AppConfig.SelectedEnvironment == null)
         {
             AnsiConsole.MarkupLine("[red]No environment selected, select it with the 'env select' command.[/]");
+            return;
         }
         
         AnsiConsole.MarkupLine($"[green]Running under Pip {Configuration.AppConfig.SelectedEnvironment!.PipVersion} (Python {Configuration.AppConfig.SelectedEnvironment.PythonVersion})[/]");

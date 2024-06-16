@@ -1,4 +1,5 @@
-﻿using PipManager.Cli.Commands;
+﻿using System.Diagnostics.CodeAnalysis;
+using PipManager.Cli.Commands;
 using PipManager.Cli.Commands.Environment;
 using PipManager.Core.Configuration;
 using Spectre.Console;
@@ -8,6 +9,10 @@ namespace PipManager.Cli;
 
 public static class Program
 {
+    [DynamicDependency(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor | DynamicallyAccessedMemberTypes.PublicNestedTypes, typeof(EnvironmentCommand))]
+    [DynamicDependency(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor | DynamicallyAccessedMemberTypes.PublicNestedTypes, typeof(EnvironmentAddCommand))]
+    [DynamicDependency(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor | DynamicallyAccessedMemberTypes.PublicNestedTypes, typeof(EnvironmentListCommand))]
+    [DynamicDependency(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor | DynamicallyAccessedMemberTypes.PublicNestedTypes, typeof(EnvironmentRemoveCommand))]
     public static async Task<int> Main(string[] args)
     {
         if (!File.Exists(Configuration.ConfigPath))
@@ -17,7 +22,7 @@ public static class Program
         
         Configuration.Initialize();
         
-        if(args[0] != "env")
+        if(args.Length > 0 && args[0] != "env")
         {
             ExecutePipCommand.Start(args);
             return 0;
@@ -33,7 +38,6 @@ public static class Program
                 env.AddCommand<EnvironmentRemoveCommand>("remove");
             });
         });
-        
         return await app.RunAsync(args);
     }
 }

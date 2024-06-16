@@ -1,5 +1,4 @@
 ﻿using PipManager.Core.Configuration;
-using PipManager.Core.Configuration.Models.Common;
 using PipManager.Core.Enums;
 using PipManager.Core.PyEnvironment;
 using Spectre.Console;

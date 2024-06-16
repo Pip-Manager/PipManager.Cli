@@ -5,14 +5,16 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <AssemblyName>PipManager.Cli</AssemblyName>
+        <AssemblyName>pipm</AssemblyName>
         <RootNamespace>PipManager.Cli</RootNamespace>
-        
+
         <PublishTrimmed>true</PublishTrimmed>
+        <TrimMode>partial</TrimMode>
         <SelfContained>true</SelfContained>
         <PublishSingleFile>true</PublishSingleFile>
         <CopyOutputSymbolsToPublishDirectory>false</CopyOutputSymbolsToPublishDirectory>
-        <SuppressTrimAnalysisWarnings>true</SuppressTrimAnalysisWarnings>
+        <Company>PipManager</Company>
+        <Product>PipManager.Cli</Product>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)'=='Release'">
