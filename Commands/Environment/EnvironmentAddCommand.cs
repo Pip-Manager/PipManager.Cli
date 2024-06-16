@@ -1,5 +1,4 @@
 ﻿using PipManager.Core.Configuration;
-using PipManager.Core.Enums;
 using PipManager.Core.PyEnvironment;
 using Spectre.Console;
 using Spectre.Console.Cli;
@@ -40,9 +39,9 @@ public class EnvironmentAddCommand : Command<EnvAddSettings>
         {
             var environments = Detector.ByEnvironmentVariable();
 
-            if (environments.Type == ResponseMessageType.Success)
+            if (environments is not null)
             {
-                var formattedEnvironments = environments.Message.Select(env => $"Pip {env.PipVersion} (Python {env.PythonVersion}) located at {env.PythonPath}");
+                var formattedEnvironments = environments.Select(env => $"Pip {env.PipVersion} (Python {env.PythonVersion}) located at {env.PythonPath}");
                 
                 var targetEnvironment = AnsiConsole.Prompt(
                     new SelectionPrompt<string>()
@@ -51,9 +50,9 @@ public class EnvironmentAddCommand : Command<EnvAddSettings>
                         .MoreChoicesText("[grey](Move up and down to reveal more environments)[/]")
                         .AddChoices(formattedEnvironments));
                 
-                var environment = environments.Message.First(env => targetEnvironment.Contains(env.PythonPath));
+                var environment = environments.First(env => targetEnvironment.Contains(env.PythonPath));
                 
-                if (Search.FindEnvironmentByPythonPath(environment.PythonPath).Type == ResponseMessageType.Success)
+                if (Search.FindEnvironmentByPythonPath(environment.PythonPath) is not null)
                 {
                     AnsiConsole.MarkupLine("[red]Environment already exists[/]");
                     return default;
@@ -66,7 +65,7 @@ public class EnvironmentAddCommand : Command<EnvAddSettings>
                     AnsiConsole.MarkupLine("[red]Identifier cannot be empty[/]");
                     return default;
                 }
-                if (Search.FindEnvironmentByIdentifier(identifier).Type == ResponseMessageType.Success)
+                if (Search.FindEnvironmentByIdentifier(identifier) is not null)
                 {
                     AnsiConsole.MarkupLine("[red]Identifier already exists[/]");
                     return default;
@@ -82,10 +81,6 @@ public class EnvironmentAddCommand : Command<EnvAddSettings>
                 Configuration.Save();
                     
                 AnsiConsole.MarkupLine("[bold green]Environment added successfully[/]");
-            }
-            else if (environments.Type == ResponseMessageType.OsNotSupported)
-            {
-                AnsiConsole.MarkupLine("[red]OS not supported[/]");
             }
         }
 

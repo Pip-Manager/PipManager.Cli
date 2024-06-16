@@ -38,10 +38,10 @@ public class EnvironmentRemoveCommand : Command<EnvRemoveSettings>
         if (!string.IsNullOrWhiteSpace(settings.PythonPath))
         {
             var response = Search.FindEnvironmentByPythonPath(settings.PythonPath);
-            if (response.Type == ResponseMessageType.Success)
+            if (response is not null)
             {
-                Configuration.AppConfig!.Environments.Remove(response.Message!);
-                if(Configuration.AppConfig.SelectedEnvironment == response.Message)
+                Configuration.AppConfig!.Environments.Remove(response);
+                if(Configuration.AppConfig.SelectedEnvironment == response)
                 {
                     Configuration.AppConfig.SelectedEnvironment = null;
                 }
@@ -56,10 +56,10 @@ public class EnvironmentRemoveCommand : Command<EnvRemoveSettings>
         else
         {
             var response = Search.FindEnvironmentByIdentifier(settings.Identifier!);
-            if (response.Type == ResponseMessageType.Success)
+            if (response is not null)
             {
-                Configuration.AppConfig!.Environments.Remove(response.Message!);
-                if(Configuration.AppConfig.SelectedEnvironment == response.Message)
+                Configuration.AppConfig!.Environments.Remove(response);
+                if(Configuration.AppConfig.SelectedEnvironment == response)
                 {
                     Configuration.AppConfig.SelectedEnvironment = null;
                 }
