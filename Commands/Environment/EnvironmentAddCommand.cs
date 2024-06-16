@@ -1,84 +1,92 @@
-﻿using CliFx;
-using CliFx.Attributes;
-using CliFx.Infrastructure;
-using ConsoleTables;
-using PipManager.Cli.Extensions;
+﻿using PipManager.Core.Configuration;
+using PipManager.Core.Configuration.Models.Common;
 using PipManager.Core.Enums;
 using PipManager.Core.PyEnvironment;
-using static PipManager.Core.PyEnvironment.Search;
-using PipManager.Core.Configuration;
+using Spectre.Console;
+using Spectre.Console.Cli;
 
 namespace PipManager.Cli.Commands.Environment;
 
-[Command("env add", Description = "Add a Python environment.")]
-public class EnvironmentAddCommand : ICommand
+public class EnvAddSettings : EnvSettings
 {
-    [CommandOption("auto", 'a', Description = "Automatically detect the Python environment.")]
+    [CommandOption("-a|--auto")]
     public bool AutomaticallyDetect { get; init; }
-    
-    public ValueTask ExecuteAsync(IConsole console)
+    [CommandOption("-p|--python-path <path>")]
+
+    public string? PythonPath { get; init; }
+    [CommandOption("-i|--identifier <identifier>")]
+
+    public string? Identifier { get; init; }
+}
+
+public class EnvironmentAddCommand : Command<EnvAddSettings>
+{
+    public override ValidationResult Validate(CommandContext context, EnvAddSettings settings)
     {
-        if (AutomaticallyDetect)
+        if (string.IsNullOrWhiteSpace(settings.PythonPath) && !settings.AutomaticallyDetect)
+        {
+            return ValidationResult.Error("Specify a Python path or use the -a/--auto flag");
+        }
+        if (!string.IsNullOrWhiteSpace(settings.PythonPath) && settings.AutomaticallyDetect)
+        {
+            return ValidationResult.Error("Specify a Python path or use the -a/--auto flag, not both");
+        }
+
+        return base.Validate(context, settings);
+    }
+
+    public override int Execute(CommandContext context, EnvAddSettings settings)
+    {
+        if (settings.AutomaticallyDetect)
         {
             var environments = Detector.ByEnvironmentVariable();
 
             if (environments.Type == ResponseMessageType.Success)
             {
-                console.Output.WriteLine("Detected environments:");
-                var table = new ConsoleTable(new ConsoleTableOptions
-                {
-                    OutputTo = console.Output,
-                });
-                table.AddColumn(["Id", "Pip Version", "Python Version", "Python Path"]);
-                for (var i = 0; i < environments.Message.Count; i++)
-                {
-                    var environment = environments.Message[i];
-                    table.AddRow(i, environment.PipVersion, environment.PythonVersion, environment.PythonPath);
-                }
-                table.Write(Format.Minimal);
+                var formattedEnvironments = environments.Message.Select(env => $"Pip {env.PipVersion} (Python {env.PythonVersion}) located at {env.PythonPath}");
                 
-                console.Output.Write("Enter the id you want to add: ");
-                var id = console.Input.ReadLine();
+                var targetEnvironment = AnsiConsole.Prompt(
+                    new SelectionPrompt<string>()
+                        .Title("[green]Select environment (from environment variables):[/]")
+                        .PageSize(5)
+                        .MoreChoicesText("[grey](Move up and down to reveal more environments)[/]")
+                        .AddChoices(formattedEnvironments));
                 
-                if (int.TryParse(id, out var index) && index < environments.Message.Count)
+                var environment = environments.Message.First(env => targetEnvironment.Contains(env.PythonPath));
+                
+                if (Search.FindEnvironmentByPythonPath(environment.PythonPath).Type == ResponseMessageType.Success)
                 {
-                    var environment = environments.Message[index];
-                    if (FindEnvironmentByPythonPath(environment.PythonPath).Type == ResponseMessageType.Success)
-                    {
-                        console.Error.WriteLine("Environment already exists");
-                        return default;
-                    }
-                    
-                    console.Output.Write("Set an identifier for this environment: ");
-                    var identifier = console.Input.ReadLine();
-                    if(string.IsNullOrWhiteSpace(identifier))
-                    {
-                        console.Error.WriteLine("Identifier cannot be empty");
-                        return default;
-                    }
-                    if (FindEnvironmentByIdentifier(identifier).Type == ResponseMessageType.Success)
-                    {
-                        console.Error.WriteLine("Identifier already exists");
-                        return default;
-                    }
-                    environment.Identifier = identifier;
-                    console.Output.Write("Set this environment as the selected environment? (y/n [default]): ");
-                    var selected = console.Input.IsYes();
-                    
-                    if (selected)
-                    {
-                        Configuration.AppConfig!.SelectedEnvironment = environment;
-                    }
-                    
-                    Configuration.AppConfig!.Environments.Add(environment);
-                    Configuration.Save();
-                    
-                    console.Output.WriteLine("Environment added successfully");
+                    AnsiConsole.MarkupLine("[red]Environment already exists[/]");
+                    return default;
                 }
-                else
+
+                var identifier = settings.Identifier ?? AnsiConsole.Ask<string>("Set an [bold]identifier[/] for this environment: ");
+
+                if(string.IsNullOrWhiteSpace(identifier))
                 {
-                    console.Error.WriteLine("Invalid id");
+                    AnsiConsole.MarkupLine("[red]Identifier cannot be empty[/]");
+                    return default;
                 }
+                if (Search.FindEnvironmentByIdentifier(identifier).Type == ResponseMessageType.Success)
+                {
+                    AnsiConsole.MarkupLine("[red]Identifier already exists[/]");
+                    return default;
+                }
+                environment.Identifier = identifier;
+                
+                if (AnsiConsole.Confirm("Switch to this environment?"))
+                {
+                    Configuration.AppConfig!.SelectedEnvironment = environment;
+                }
+                
+                Configuration.AppConfig!.Environments.Add(environment);
+                Configuration.Save();
+                    
+                AnsiConsole.MarkupLine("[bold green]Environment added successfully[/]");
+            }
+            else if (environments.Type == ResponseMessageType.OsNotSupported)
+            {
+                AnsiConsole.MarkupLine("[red]OS not supported[/]");
             }
         }
 

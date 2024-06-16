@@ -1,29 +1,60 @@
-﻿using CliFx;
-using CliFx.Attributes;
-using CliFx.Infrastructure;
+﻿using System.Diagnostics;
 using PipManager.Core.Configuration;
+using Spectre.Console;
+using Spectre.Console.Cli;
 
 namespace PipManager.Cli.Commands;
 
-[Command]
-public class ExecutePipCommand : ICommand
+
+public class ExecutePipCommand
 {
-    [CommandParameter(0)]
-    // ReSharper disable once UnusedAutoPropertyAccessor.Global
-    public required IReadOnlyList<string> Arguments { get; init; }
-    
-    public ValueTask ExecuteAsync(IConsole console)
+    public static void Start(string[] args)
     {
         if(Configuration.AppConfig!.Environments.Count == 0)
         {
-            console.Error.WriteLine("Python environment has not been added yet, add it with the 'env add' command.");
-            return default;
+            AnsiConsole.MarkupLine("[red]Python environment has not been added yet, add it with the 'env add' command.[/]");
         }
-        foreach (var argument in Arguments)
-        { 
-            console.Output.WriteLine($"Executing: {argument}");
+        if(Configuration.AppConfig.SelectedEnvironment == null)
+        {
+            AnsiConsole.MarkupLine("[red]No environment selected, select it with the 'env select' command.[/]");
         }
+        
+        AnsiConsole.MarkupLine($"[green]Running under Pip {Configuration.AppConfig.SelectedEnvironment!.PipVersion} (Python {Configuration.AppConfig.SelectedEnvironment.PythonVersion})[/]");
 
-        return default;
+        var process = new Process();
+        process.StartInfo.FileName = Configuration.AppConfig.SelectedEnvironment.PythonPath;
+        process.StartInfo.Arguments = string.Join(" ", ["-m", "pip", ..args]);
+        process.StartInfo.RedirectStandardOutput = true;
+        process.StartInfo.RedirectStandardError = true;
+        process.StartInfo.UseShellExecute = false;
+        process.StartInfo.CreateNoWindow = true;
+
+        process.OutputDataReceived += (_, e) =>
+        {
+            if (e.Data != null)
+            {
+                AnsiConsole.WriteLine(e.Data);
+            }
+        };
+        
+        process.ErrorDataReceived += (_, e) => 
+        {
+            if (e.Data != null)
+            {
+                AnsiConsole.MarkupLineInterpolated($"[red]{e.Data}[/]");
+            }
+        };
+
+        try
+        {
+            process.Start();
+            process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
+            process.WaitForExit();
+        }
+        catch (Exception ex)
+        {
+            AnsiConsole.WriteLine($"Exception: {ex.Message}");
+        }
     }
 }
