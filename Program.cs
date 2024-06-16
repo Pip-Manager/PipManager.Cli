@@ -36,9 +36,10 @@ public static class Program
                 env.AddCommand<EnvironmentAddCommand>("add");
                 env.AddCommand<EnvironmentListCommand>("list");
                 env.AddCommand<EnvironmentRemoveCommand>("remove");
+                env.AddCommand<EnvironmentInfoCommand>("info");
             });
 
-            config.SetExceptionHandler((ex, resolver) =>
+            config.SetExceptionHandler((ex, _) =>
             {
                 AnsiConsole.WriteException(ex, ExceptionFormats.NoStackTrace | ExceptionFormats.ShortenTypes);
                 return 1;
