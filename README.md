@@ -3,22 +3,24 @@
 <br />
 <div align="center">
   <a href="https://github.com/Pip-Manager/PipManager.Cli">
-    <img src="https://raw.githubusercontent.com/Pip-Manager/PipManager.Assets/main/pipManager.ico" alt="Logo" width="80" height="80">
+    <img src="https://raw.githubusercontent.com/Pip-Manager/PipManager.Assets/main/pipManager.png" alt="Logo" width="90" height="90">
   </a>
 
-<h3 align="center">Pip Manager</h3>
+<h3 align="center">PipManager.Cli</h3>
 
   <p align="center">
-    A Python Package Manager (pip based)
+    A Python Environment Manager (pip based)
     <br />
-    <a href="https://pipmanager.dev"><strong>Explore the docs (Chinese Simplified) »</strong></a>
+    Simple, Cross-platform, Lightweight
     <br />
     <br />
-    <a href="https://github.com/Pip-Manager/PipManager.Wpf?tab=readme-ov-file#screenshots">Screenshots</a>
+    <a href="https://pipmanager.dev"><strong>Explore the docs (WIP)»</strong></a>
+    <br />
+    <a href="https://github.com/Pip-Manager/PipManager.Cli?tab=readme-ov-file#screenshots">Screenshots</a>
     ·
-    <a href="https://github.com/Pip-Manager/PipManager.Wpf/issues">Report Bug</a>
+    <a href="https://github.com/Pip-Manager/PipManager.Cli/issues">Report Bug</a>
     ·
-    <a href="https://github.com/Pip-Manager/PipManager.Wpf/pulls">Request Feature</a>
+    <a href="https://github.com/Pip-Manager/PipManager.Cli/pulls">Request Feature</a>
   </p>
 </div>
 
@@ -39,44 +41,25 @@ The project is in an early stage of development and has a lot of bugs
 
 ---
 
-## About Pip Manager
+## About
 
-Pip Manager is a package manager for Python newcomers (based on Pip)
+`PipManager.Cli` is a environment manager (based on Pip)
 
-Features:
-* GUI
-* Integration of most Pip commands
-* Multi-Pip environment switching
-
-Easier operation of Pip is the goal of Pip Manager.
+Easier operation of Pip and multiple Python environments management is the goal of `Pip Manager`.
 
 ### Technology
 
 <img height="200" alt="language csharp" src="https://raw.githubusercontent.com/jonacruz89/SAWARATSUKI.ServiceLogos/main/C%23/C%23%20Purple.png"/>
 
-Pip Manager is based on the following technology stacks:
+`PipManager.Cli` is based on the following technology stacks:
 
-[![.NET Core][.NET Core]][.NET-url][![WPF][WPF]][WPF-url]
+[![.NET Core][.NET Core]][.NET-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-## Screenshots
-
-![light.jpeg](https://loli.tc/images/light.jpeg)
-![dark.jpeg](https://loli.tc/images/dark.jpeg)
 
 ## Getting Started
 
-Double click `PipManager.exe` or `PipManager_withRuntime.exe` *If you have not installed [.Net 8 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/8.0)*
-
-### Arguments
-
-- `/console`: Show console while program running
-- `/experiment`: Enable a secret page for test *Currently this feature is useless*
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-See the [Open Issues](https://github.com/Pip-Manager/PipManager.Wpf/issues) for a full list of proposed features (and known issues).
+WIP
 
 
 ## Contributing
@@ -84,27 +67,23 @@ See the [Open Issues](https://github.com/Pip-Manager/PipManager.Wpf/issues) for 
 1. Fork the Project
 2. Create your Feature Branch
 3. Commit your Changes
-4. Push to the Branch `development`
+4. Push to the Branch
 5. Open a Pull Request
 
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
 
-Kawaii `C#` Logo in [Technology Stack](#technology-stack) is created by [SAWATSUKI](https://github.com/SAWARATSUKI)
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-[github-downloads-shield]: https://img.shields.io/github/downloads/Pip-Manager/PipManager.Wpf/total.svg?style=for-the-badge&color=blue
-[github-downloads-url]: https://github.com/Pip-Manager/PipManager.Wpf/releases
-[stars-shield]: https://img.shields.io/github/stars/Pip-Manager/PipManager.Wpf.svg?style=for-the-badge
-[stars-url]: https://github.com/Pip-Manager/PipManager.Wpf/stargazers
-[issues-shield]: https://img.shields.io/github/issues/Pip-Manager/PipManager.Wpf.svg?style=for-the-badge
-[issues-url]: https://github.com/Pip-Manager/PipManager.Wpf/issues
-[license-shield]: https://img.shields.io/github/license/Pip-Manager/PipManager.Wpf.svg?style=for-the-badge
-[license-url]: https://github.com/Pip-Manager/PipManager.Wpf/blob/master/LICENSE.txt
+[github-downloads-shield]: https://img.shields.io/github/downloads/Pip-Manager/PipManager.Cli/total.svg?style=for-the-badge&color=blue
+[github-downloads-url]: https://github.com/Pip-Manager/PipManager.Cli/releases
+[stars-shield]: https://img.shields.io/github/stars/Pip-Manager/PipManager.Cli.svg?style=for-the-badge
+[stars-url]: https://github.com/Pip-Manager/PipManager.Cli/stargazers
+[issues-shield]: https://img.shields.io/github/issues/Pip-Manager/PipManager.Cli.svg?style=for-the-badge
+[issues-url]: https://github.com/Pip-Manager/PipManager.Cli/issues
+[license-shield]: https://img.shields.io/github/license/Pip-Manager/PipManager.Cli.svg?style=for-the-badge
+[license-url]: https://github.com/Pip-Manager/PipManager.Cli/blob/master/LICENSE.txt
 [screenshot]: images/screenshot.png
 [.NET Core]: https://img.shields.io/badge/.NET_Core-512BD4?style=for-the-badge&logo=dotnet&logoColor=white
 [.NET-url]: https://dotnet.microsoft.com/
-[WPF]: https://img.shields.io/badge/WPF-1E90FF?style=for-the-badge&logo=windows&logoColor=61DAFB
-[WPF-url]: https://github.com/dotnet/wpf
