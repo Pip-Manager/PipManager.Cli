@@ -37,6 +37,7 @@ public static class Program
                 env.AddCommand<EnvironmentListCommand>("list");
                 env.AddCommand<EnvironmentRemoveCommand>("remove");
                 env.AddCommand<EnvironmentInfoCommand>("info");
+                env.AddCommand<EnvironmentSwitchCommand>("switch");
             });
 
             config.SetExceptionHandler((ex, _) =>
