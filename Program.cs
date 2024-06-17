@@ -9,10 +9,6 @@ namespace PipManager.Cli;
 
 public static class Program
 {
-    [DynamicDependency(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor | DynamicallyAccessedMemberTypes.PublicNestedTypes, typeof(EnvironmentCommand))]
-    [DynamicDependency(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor | DynamicallyAccessedMemberTypes.PublicNestedTypes, typeof(EnvironmentAddCommand))]
-    [DynamicDependency(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor | DynamicallyAccessedMemberTypes.PublicNestedTypes, typeof(EnvironmentListCommand))]
-    [DynamicDependency(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor | DynamicallyAccessedMemberTypes.PublicNestedTypes, typeof(EnvironmentRemoveCommand))]
     public static async Task<int> Main(string[] args)
     {
         if (!File.Exists(Configuration.ConfigPath))

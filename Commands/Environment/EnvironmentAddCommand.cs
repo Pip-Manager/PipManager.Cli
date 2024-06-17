@@ -1,4 +1,5 @@
 ﻿using PipManager.Core.Configuration;
+using PipManager.Core.Configuration.Models;
 using PipManager.Core.PyEnvironment;
 using Spectre.Console;
 using Spectre.Console.Cli;
@@ -35,6 +36,7 @@ public class EnvironmentAddCommand : Command<EnvAddSettings>
 
     public override int Execute(CommandContext context, EnvAddSettings settings)
     {
+        EnvironmentModel environment;
         if (settings.AutomaticallyDetect)
         {
             var environments = Detector.ByEnvironmentVariable();
@@ -47,38 +49,42 @@ public class EnvironmentAddCommand : Command<EnvAddSettings>
                     .MoreChoicesText("[grey](Move up and down to reveal more environments)[/]")
                     .AddChoices(formattedEnvironments));
                 
-            var environment = environments.First(env => targetEnvironment.Contains(env.PythonPath));
-                
-            if (Search.FindEnvironmentByPythonPath(environment.PythonPath) is not null)
-            {
-                AnsiConsole.MarkupLine("[red]Environment already exists[/]");
-                return default;
-            }
-
-            var identifier = settings.Identifier ?? AnsiConsole.Ask<string>("Set an [bold]identifier[/] for this environment: ");
-
-            if(string.IsNullOrWhiteSpace(identifier))
-            {
-                AnsiConsole.MarkupLine("[red]Identifier cannot be empty[/]");
-                return default;
-            }
-            if (Search.FindEnvironmentByIdentifier(identifier) is not null)
-            {
-                AnsiConsole.MarkupLine("[red]Identifier already exists[/]");
-                return default;
-            }
-            environment.Identifier = identifier;
-                
-            if (AnsiConsole.Confirm("Switch to this environment?"))
-            {
-                Configuration.AppConfig!.SelectedEnvironment = environment;
-            }
-                
-            Configuration.AppConfig!.Environments.Add(environment);
-            Configuration.Save();
-                    
-            AnsiConsole.MarkupLine("[bold green]Environment added successfully[/]");
+            environment = environments.First(env => targetEnvironment.Contains(env.PythonPath));
         }
+        else
+        {
+            environment = Detector.ByPythonPath(settings.PythonPath!);
+        }
+        
+        if (Search.FindEnvironmentByPythonPath(environment.PythonPath) is not null)
+        {
+            AnsiConsole.MarkupLine("[red]Environment already exists[/]");
+            return default;
+        }
+
+        var identifier = settings.Identifier ?? AnsiConsole.Ask<string>("Set an [bold]identifier[/] for this environment: ");
+
+        if(string.IsNullOrWhiteSpace(identifier))
+        {
+            AnsiConsole.MarkupLine("[red]Identifier cannot be empty[/]");
+            return default;
+        }
+        if (Search.FindEnvironmentByIdentifier(identifier) is not null)
+        {
+            AnsiConsole.MarkupLine("[red]Identifier already exists[/]");
+            return default;
+        }
+        environment.Identifier = identifier;
+                
+        if (AnsiConsole.Confirm("Switch to this environment?"))
+        {
+            Configuration.AppConfig!.SelectedEnvironment = environment;
+        }
+                
+        Configuration.AppConfig!.Environments.Add(environment);
+        Configuration.Save();
+                    
+        AnsiConsole.MarkupLine("[bold green]Environment added successfully[/]");
 
         return default;
     }
