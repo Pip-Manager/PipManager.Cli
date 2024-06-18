@@ -13,7 +13,7 @@ public static class Program
     {
         if (!File.Exists(Configuration.ConfigPath))
         {
-            Console.WriteLine($"It seems to be using PipManager.Cli for the first time, the settings file has been created ({Configuration.ConfigPath})");
+            AnsiConsole.MarkupLine($"[Orange1]It seems to be using PipManager.Cli for the first time, the settings file has been created ({Configuration.ConfigPath})[/]");
         }
         
         Configuration.Initialize();
@@ -34,6 +34,7 @@ public static class Program
                 env.AddCommand<EnvironmentRemoveCommand>("remove");
                 env.AddCommand<EnvironmentInfoCommand>("info");
                 env.AddCommand<EnvironmentSwitchCommand>("switch");
+                env.AddCommand<EnvironmentSourceCommand>("source");
             });
 
             config.SetExceptionHandler((ex, _) =>

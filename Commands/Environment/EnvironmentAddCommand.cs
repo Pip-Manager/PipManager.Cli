@@ -36,7 +36,7 @@ public class EnvironmentAddCommand : Command<EnvAddSettings>
 
     public override int Execute(CommandContext context, EnvAddSettings settings)
     {
-        EnvironmentModel environment;
+        EnvironmentModel? environment;
         if (settings.AutomaticallyDetect)
         {
             var environments = Detector.ByEnvironmentVariable();
@@ -54,6 +54,11 @@ public class EnvironmentAddCommand : Command<EnvAddSettings>
         else
         {
             environment = Detector.ByPythonPath(settings.PythonPath!);
+            if(environment == null)
+            {
+                AnsiConsole.MarkupLine("[red]Python path is not found[/]");
+                return default;
+            }
         }
         
         if (Search.FindEnvironmentByPythonPath(environment.PythonPath) is not null)
