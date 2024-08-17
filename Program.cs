@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using PipManager.Cli.Commands;
+﻿using PipManager.Cli.Commands;
 using PipManager.Cli.Commands.Environment;
 using PipManager.Core.Configuration;
 using Spectre.Console;
@@ -13,7 +12,7 @@ public static class Program
     {
         if (!File.Exists(Configuration.ConfigPath))
         {
-            AnsiConsole.MarkupLine($"[Orange1]It seems to be using PipManager.Cli for the first time, the settings file has been created ({Configuration.ConfigPath})[/]");
+            AnsiConsole.MarkupLine($"[Orange1]It seems to be using PipManager CLI for the first time, the settings file has been created ({Configuration.ConfigPath})[/]");
         }
         
         Configuration.Initialize();
@@ -27,6 +26,8 @@ public static class Program
         var app = new CommandApp();
         app.Configure(config =>
         {
+            config.SetApplicationName("pipm");
+            
             config.AddBranch<EnvSettings>("env", env =>
             {
                 env.AddCommand<EnvironmentAddCommand>("add");

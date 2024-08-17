@@ -41,12 +41,12 @@ public class EnvironmentSwitchCommand : Command<EnvSwitchSettings>
             var response = Search.FindEnvironmentByPythonPath(settings.PythonPath);
             if (response is not null)
             {
-                if(response.PythonPath == Configuration.AppConfig!.SelectedEnvironment?.PythonPath)
+                if(response.PythonPath == Configuration.AppConfig.SelectedEnvironment?.PythonPath)
                 {
                     AnsiConsole.MarkupLine("[orange1]This environment is already selected[/]");
                     return default;
                 }
-                Configuration.AppConfig!.SelectedEnvironment = response;
+                Configuration.AppConfig.SelectedEnvironment = response;
                 Configuration.Save();
                 AnsiConsole.MarkupLine($"[green]Environment switched: {response.Identifier} (Python {response.PythonVersion} | Pip {response.PipVersion})[/]");
             }
@@ -60,12 +60,12 @@ public class EnvironmentSwitchCommand : Command<EnvSwitchSettings>
             var response = Search.FindEnvironmentByIdentifier(settings.Identifier!);
             if (response is not null)
             {
-                if(response.Identifier == Configuration.AppConfig!.SelectedEnvironment?.Identifier)
+                if(response.Identifier == Configuration.AppConfig.SelectedEnvironment?.Identifier)
                 {
                     AnsiConsole.MarkupLine("[orange1]This environment is already selected[/]");
                     return default;
                 }
-                Configuration.AppConfig!.SelectedEnvironment = response;
+                Configuration.AppConfig.SelectedEnvironment = response;
                 Configuration.Save();
                 AnsiConsole.MarkupLine($"[green]Environment switched: {response.Identifier} (Python {response.PythonVersion} | Pip {response.PipVersion})[/]");
             }

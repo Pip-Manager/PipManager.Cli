@@ -27,7 +27,7 @@ public class EnvironmentSourceCommand : Command<EnvSourceSettings>
         {
             return ValidationResult.Error("Invalid URL");
         }
-        return check != 1 ? ValidationResult.Error("Only one of UseDefault, UseTsinghua and Custom can be specified, not all of them.") : base.Validate(context, settings);
+        return check != 1 ? ValidationResult.Error("Only one of Default, Tsinghua and Custom can be specified, not all of them.") : base.Validate(context, settings);
     }
     
     public override int Execute(CommandContext context, EnvSourceSettings settings)
@@ -40,7 +40,10 @@ public class EnvironmentSourceCommand : Command<EnvSourceSettings>
         {
             Configuration.AppConfig!.PackageSource = "tsinghua";
         }
-        Configuration.AppConfig!.PackageSource = settings.CustomUrl!;
+        else
+        {
+            Configuration.AppConfig!.PackageSource = settings.CustomUrl!;
+        }
         Configuration.Save();
         return default;
     }

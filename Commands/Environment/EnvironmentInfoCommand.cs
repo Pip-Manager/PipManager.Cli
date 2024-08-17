@@ -20,6 +20,7 @@ public class EnvironmentInfoCommand : Command<EnvSettings>
             return default;
         }
         
+        Configuration.UpdateSelectedEnvironment();
         var environment = Configuration.AppConfig.SelectedEnvironment;
         
         AnsiConsole.MarkupLine("[Orange1]System Information[/]");
