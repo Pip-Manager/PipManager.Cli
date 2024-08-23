@@ -16,8 +16,6 @@
     <br />
     <a href="https://pipmanager.dev"><strong>Explore the docs (WIP)»</strong></a>
     <br />
-    <a href="https://github.com/Pip-Manager/PipManager.Cli?tab=readme-ov-file#screenshots">Screenshots</a>
-    ·
     <a href="https://github.com/Pip-Manager/PipManager.Cli/issues">Report Bug</a>
     ·
     <a href="https://github.com/Pip-Manager/PipManager.Cli/pulls">Request Feature</a>
@@ -49,18 +47,11 @@ Easier operation of Pip and multiple Python environments management is the goal 
 
 ### Technology
 
-<img height="200" alt="language csharp" src="https://raw.githubusercontent.com/jonacruz89/SAWARATSUKI.ServiceLogos/main/C%23/C%23%20Purple.png"/>
-
 `PipManager.Cli` is based on the following technology stacks:
 
 [![.NET Core][.NET Core]][.NET-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-## Getting Started
-
-WIP
-
 
 ## Contributing
 
