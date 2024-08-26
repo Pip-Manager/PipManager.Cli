@@ -34,15 +34,15 @@ public class EnvironmentSourceCommand : Command<EnvSourceSettings>
     {
         if (settings.UseDefault)
         {
-            Configuration.AppConfig!.PackageSource = "default";
+            Configuration.AppConfig!.PackageSource.Source = "default";
         }
         else if (settings.UseTsinghua)
         {
-            Configuration.AppConfig!.PackageSource = "tsinghua";
+            Configuration.AppConfig!.PackageSource.Source = "tsinghua";
         }
         else
         {
-            Configuration.AppConfig!.PackageSource = settings.CustomUrl!;
+            Configuration.AppConfig!.PackageSource.Source = settings.CustomUrl!;
         }
         Configuration.Save();
         return default;

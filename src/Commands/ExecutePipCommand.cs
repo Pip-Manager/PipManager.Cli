@@ -17,7 +17,7 @@ public class ExecutePipCommand
             AnsiConsole.MarkupLine("[orange1]The source index has been specified, the source index in the configuration file will be ignored.[/]");
             return args;
         }
-        var packageSource = Configuration.AppConfig!.PackageSource;
+        var packageSource = Configuration.AppConfig!.PackageSource.Source;
         if (packageSource == "default")
         {
             return args;
