@@ -18,7 +18,7 @@ public class ExecutePipCommand
             return args;
         }
         var packageSource = Configuration.AppConfig!.PackageSource.Source;
-        if (packageSource == "default")
+        if (packageSource == "official")
         {
             return args;
         }

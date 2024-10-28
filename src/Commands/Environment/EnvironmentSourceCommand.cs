@@ -34,7 +34,7 @@ public class EnvironmentSourceCommand : Command<EnvSourceSettings>
     {
         if (settings.UseDefault)
         {
-            Configuration.AppConfig!.PackageSource.Source = "default";
+            Configuration.AppConfig!.PackageSource.Source = "official";
         }
         else if (settings.UseTsinghua)
         {
