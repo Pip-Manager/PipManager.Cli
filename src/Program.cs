@@ -14,8 +14,20 @@ public static class Program
         {
             AnsiConsole.MarkupLine($"[Orange1]It seems to be using PipManager CLI for the first time, the settings file has been created ({Configuration.ConfigPath})[/]");
         }
-        
-        Configuration.Initialize();
+
+        if (!Configuration.Initialize())
+        {
+            Console.Write("config.json is broken, reset? [y/n]: ");
+            var result = Console.ReadLine()?.ToLower();
+            if (result == "y")
+            {
+                Configuration.Reset();
+            }
+            else
+            {
+                return 0;
+            }
+        }
         
         if(args.Length > 0 && args[0] != "env")
         {
