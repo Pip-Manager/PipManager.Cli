@@ -9,7 +9,7 @@ public class EnvironmentInfoCommand : Command<EnvSettings>
 {
     public override int Execute(CommandContext context, EnvSettings settings)
     {
-        if(Configuration.AppConfig!.Environments.Count == 0)
+        if(Configuration.AppConfig.Environments.Count == 0)
         {
             AnsiConsole.MarkupLine("[red]Python environment has not been added yet, add it with the 'env add' command.[/]");
             return default;

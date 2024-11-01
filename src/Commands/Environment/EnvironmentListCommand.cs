@@ -8,7 +8,7 @@ public class EnvironmentListCommand : Command<EnvSettings>
 {
     public override ValidationResult Validate(CommandContext context, EnvSettings settings)
     {
-        if(Configuration.AppConfig!.Environments.Count == 0)
+        if(Configuration.AppConfig.Environments.Count == 0)
         {
             return ValidationResult.Error("Python environment has not been added yet, add it with the 'env add' command.");
         }
@@ -24,7 +24,7 @@ public class EnvironmentListCommand : Command<EnvSettings>
         };
 
         table.AddColumns("Identifier", "Pip Version", "Python Version", "Python Path");
-        foreach (var environment in Configuration.AppConfig!.Environments)
+        foreach (var environment in Configuration.AppConfig.Environments)
         {
             table.AddRow(environment.Identifier, environment.PipVersion, environment.PythonVersion, environment.PythonPath);
         }

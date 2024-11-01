@@ -17,7 +17,7 @@ public class ExecutePipCommand
             AnsiConsole.MarkupLine("[orange1]The source index has been specified, the source index in the configuration file will be ignored.[/]");
             return args;
         }
-        var packageSource = Configuration.AppConfig!.PackageSource.Source;
+        var packageSource = Configuration.AppConfig.PackageSource.Source;
         if (packageSource == "official")
         {
             return args;
@@ -31,7 +31,7 @@ public class ExecutePipCommand
     
     public static void Start(string[] args)
     {
-        if(Configuration.AppConfig!.Environments.Count == 0)
+        if(Configuration.AppConfig.Environments.Count == 0)
         {
             AnsiConsole.MarkupLine("[red]Python environment has not been added yet, add it with the 'env add' command.[/]");
             return;

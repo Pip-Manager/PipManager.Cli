@@ -10,7 +10,7 @@ public class EnvironmentCommand : Command<EnvSettings>
 {
     public override int Execute(CommandContext context, EnvSettings settings)
     {
-        var selectedEnvironment = Configuration.AppConfig!.SelectedEnvironment;
+        var selectedEnvironment = Configuration.AppConfig.SelectedEnvironment;
         var environments = Configuration.AppConfig.Environments;
         switch (environments.Count)
         {

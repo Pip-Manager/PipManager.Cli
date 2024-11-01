@@ -35,7 +35,7 @@ public class EnvironmentSwitchCommand : Command<EnvSwitchSettings>
 
     public override int Execute(CommandContext context, EnvSwitchSettings settings)
     {
-        AnsiConsole.MarkupLine($"Current Environment: {Configuration.AppConfig!.SelectedEnvironment!.Formatted()}");
+        AnsiConsole.MarkupLine($"Current Environment: {Configuration.AppConfig.SelectedEnvironment!.Formatted()}");
         if (!string.IsNullOrWhiteSpace(settings.PythonPath))
         {
             var response = Search.FindEnvironmentByPythonPath(settings.PythonPath);

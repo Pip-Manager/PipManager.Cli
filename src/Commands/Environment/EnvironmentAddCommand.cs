@@ -83,10 +83,10 @@ public class EnvironmentAddCommand : Command<EnvAddSettings>
                 
         if (AnsiConsole.Confirm("Switch to this environment?"))
         {
-            Configuration.AppConfig!.SelectedEnvironment = environment;
+            Configuration.AppConfig.SelectedEnvironment = environment;
         }
                 
-        Configuration.AppConfig!.Environments.Add(environment);
+        Configuration.AppConfig.Environments.Add(environment);
         Configuration.Save();
                     
         AnsiConsole.MarkupLine("[bold green]Environment added successfully[/]");

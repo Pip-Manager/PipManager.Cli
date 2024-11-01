@@ -39,7 +39,7 @@ public class EnvironmentRemoveCommand : Command<EnvRemoveSettings>
             var response = Search.FindEnvironmentByPythonPath(settings.PythonPath);
             if (response is not null)
             {
-                Configuration.AppConfig!.Environments.Remove(response);
+                Configuration.AppConfig.Environments.Remove(response);
                 if(Configuration.AppConfig.SelectedEnvironment == response)
                 {
                     Configuration.AppConfig.SelectedEnvironment = null;
@@ -57,7 +57,7 @@ public class EnvironmentRemoveCommand : Command<EnvRemoveSettings>
             var response = Search.FindEnvironmentByIdentifier(settings.Identifier!);
             if (response is not null)
             {
-                Configuration.AppConfig!.Environments.Remove(response);
+                Configuration.AppConfig.Environments.Remove(response);
                 if(Configuration.AppConfig.SelectedEnvironment == response)
                 {
                     Configuration.AppConfig.SelectedEnvironment = null;
